@@ -38,7 +38,7 @@ const EONET_BASE = "https://eonet.gsfc.nasa.gov/api/v3";
 
 export async function fetchOpenEvents(): Promise<EonetEvent[]> {
   const res = await fetch(`${EONET_BASE}/events?status=open`, {
-    next: { revalidate: 60 * 15 },
+    cache: "no-store",
   });
   if (!res.ok) {
     throw new Error(`EONET request failed: ${res.status}`);
