@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Earth — live NASA data on a 3D globe
+
+An interactive 3D Earth that streams real NASA feeds onto the globe: natural
+events, near-Earth asteroids, the ISS, and the Astronomy Picture of the Day.
+Built with Next.js, Three.js, and react-three-fiber.
+
+## Data sources
+
+- **EONET** — natural events (wildfires, storms, volcanoes, ice) as markers on the globe (`lib/eonet.ts`)
+- **NeoWs** — near-Earth objects rendered as orbiting asteroids (`lib/neo.ts`)
+- **ISS** — live station position, polled every 5s via `app/api/iss/route.ts` (`lib/iss.ts`)
+- **APOD** — Astronomy Picture of the Day card (`lib/apod.ts`)
+
+## Features
+
+- Day/night terminator from a real solar-position calculation (`lib/sunPosition.ts`)
+- Category filters, layer toggles, and a timeline scrubber to replay events over time
+- Shareable views via URL hash state (`lib/urlState.ts`)
+- Optional ambient soundscape (`lib/audio.ts`)
+- Responsive layout with a mobile nav (`components/MobileNav.tsx`)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
+cp .env.example .env.local   # optional, DEMO_KEY works out of the box
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### NASA API key
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+APOD and NeoWs call api.nasa.gov. `DEMO_KEY` works but is rate-limited (~30/hr).
+For a higher limit, grab a free key at [api.nasa.gov](https://api.nasa.gov) and set:
 
-## Learn More
+```
+NASA_API_KEY=your_key_here
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` — development server
+- `npm run build` — production build
+- `npm start` — serve the production build
+- `npm run lint` — ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Stack
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js 16 · React 19 · Three.js · @react-three/fiber · @react-three/drei
